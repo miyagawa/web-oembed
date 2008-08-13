@@ -75,7 +75,7 @@ sub request_url {
 sub embed {
     my($self, $uri, $opt) = @_;
 
-    my $url = $self->request_url($uri, $opt);
+    my $url = $self->request_url($uri, $opt) or return;
     my $res = $self->agent->get($url);
 
     Web::oEmbed::Response->new_from_response($res);
