@@ -1,4 +1,5 @@
 package Web::oEmbed::Response;
+use strict;
 use Carp;
 use Moose;
 
