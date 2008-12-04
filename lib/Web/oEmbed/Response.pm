@@ -1,7 +1,7 @@
 package Web::oEmbed::Response;
 use strict;
 use Carp;
-use Moose;
+use Squirrel;
 
 has 'http_response', is => 'ro', isa => 'HTTP::Response';
 

@@ -37,9 +37,9 @@ __END__
 ===
 --- input: http://www.vimeo.com/757219
 --- html
-<object type="application/x-shockwave-flash" width="504" height="380" data="http://www.vimeo.com/moogaloop.swf?clip_id=757219&amp;server=www.vimeo.com&amp;fullscreen=1&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF">
+<object type="application/x-shockwave-flash" width="504" height="380" data="http://vimeo.com/moogaloop.swf?clip_id=757219&amp;server=vimeo.com&amp;fullscreen=1&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF">
         <param name="quality" value="best" />
         <param name="allowfullscreen" value="true" />
         <param name="scale" value="showAll" />
-        <param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=757219&amp;server=www.vimeo.com&amp;fullscreen=1&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF" />
+        <param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=757219&amp;server=vimeo.com&amp;fullscreen=1&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF" />
 </object>
