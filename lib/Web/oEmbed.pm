@@ -104,14 +104,16 @@ Web::oEmbed - oEmbed consumer
 
   my $response = eval { $consumer->embed("http://www.flickr.com/photos/bulknews/2752124387/") };
   if ($response) {
-      $response->matched_uri; # 'http://www.flickr.com/photos/bulknews/2752124387/'
-      $response->type;        # 'photo'
-      $response->title;       # title of the photo
-      $response->url;         # JPEG URL
-      $response->width;       # JPEG width
-      $response->height;      # JPEG height
+      $response->matched_uri;   # 'http://www.flickr.com/photos/bulknews/2752124387/'
+      $response->type;          # 'photo'
+      $response->title;         # title of the photo
+      $response->url;           # JPEG URL
+      $response->width;         # JPEG width
+      $response->height;        # JPEG height
+      $response->provider_name; # Flickr
+      $response->provider_url;  # http://www.flickr.com/
 
-      print $response->render; # handy shortcut to generate <img/> tag
+      print $response->render;  # handy shortcut to generate <img/> tag
   }
 
 =head1 DESCRIPTION
