@@ -6,3 +6,10 @@ all_pod_files_spelling_ok('lib');
 __DATA__
 Tatsuhiko
 Miyagawa
+TODO
+Trie
+html
+ish
+prefered
+speciied
+url
