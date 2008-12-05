@@ -5,13 +5,14 @@ use Squirrel;
 
 has 'http_response', is => 'ro', isa => 'HTTP::Response';
 
+has 'matched_uri', is => 'ro';
 has 'type', is => 'rw';
 has 'version', is => 'rw';
 has 'title', is => 'rw';
 has 'author_name', is => 'rw';
 has 'author_url', is => 'rw';
-has 'prwvider_name', is => 'rw';
-has 'prwvider_url', is => 'rw';
+has 'provider_name', is => 'rw';
+has 'provider_url', is => 'rw';
 has 'cache_age', is => 'rw';
 has 'thumbnail_url', is => 'rw';
 has 'thumbnail_width', is => 'rw';
@@ -26,11 +27,11 @@ has 'html', is => 'rw';
 use HTML::Element;
 
 sub new_from_response {
-    my($class, $http_res) = @_;
+    my($class, $http_res, $uri) = @_;
 
     return if $http_res->is_error;
 
-    my $res = $class->new( http_response => $http_res );
+    my $res = $class->new( http_response => $http_res, matched_uri => $uri );
 
     my $data;
     if ($http_res->content_type =~ /json/) {

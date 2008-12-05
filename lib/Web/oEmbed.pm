@@ -78,7 +78,7 @@ sub embed {
     my $url = $self->request_url($uri, $opt) or return;
     my $res = $self->agent->get($url);
 
-    Web::oEmbed::Response->new_from_response($res);
+    Web::oEmbed::Response->new_from_response($res, $uri);
 }
 
 1;
@@ -99,7 +99,7 @@ Web::oEmbed - oEmbed consumer
   my $consumer = Web::oEmbed->new({ format => 'json' });
   $consumer->register_provider({
       url  => 'http://*.flickr.com/*',
-      api  => 'http://www.flickr.com/services/oembed/,
+      api  => 'http://www.flickr.com/services/oembed/',
   });
 
   my $response = eval { $consumer->embed("http://www.flickr.com/photos/bulknews/2752124387/") };
