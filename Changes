@@ -1,5 +1,8 @@
 Revision history for Perl extension Web::oEmbed
 
+0.03  Thu Feb 19 21:39:18 PST 2009
+        - use Any::Moose
+
 0.02  Fri Dec  5 02:36:44 JST 2008
         - use Squirrel
 
