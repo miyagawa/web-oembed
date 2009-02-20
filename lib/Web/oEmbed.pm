@@ -4,7 +4,7 @@ use strict;
 use 5.8.1;
 our $VERSION = '0.02';
 
-use Squirrel;
+use Any::Moose;
 has 'format'    => (is => 'rw', default => 'json');
 has 'discovery' => (is => 'rw');
 has 'providers' => (is => 'rw', isa => 'ArrayRef', default => sub { [] });
