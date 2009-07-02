@@ -2,7 +2,7 @@ package Web::oEmbed;
 
 use strict;
 use 5.8.1;
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use Any::Moose;
 has 'format'    => (is => 'rw', default => 'json');
