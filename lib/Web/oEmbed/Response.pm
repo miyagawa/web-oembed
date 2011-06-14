@@ -62,7 +62,14 @@ sub parse_json {
 sub parse_xml {
     my($self, $xml) = @_;
     require XML::LibXML::Simple;
-    XML::LibXML::Simple->new->XMLin($xml);
+    my $parser_opts = {
+        no_network => 1,
+        expand_xinclude => 0,
+        expand_entities => 1,
+        load_ext_dtd => 0,
+        ext_ent_handler => sub { warn "External entities disabled."; '' },
+    };
+    XML::LibXML::Simple->new(parser_opts => $parser_opts)->XMLin($xml);
 }
 
 sub render {
