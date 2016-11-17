@@ -1,13 +1,21 @@
 Revision history for Perl extension Web::oEmbed
 
-0.04  Thu Jul  2 15:52:19 PDT 2009
-        - Kill the last instance of Squirrel
+0.04_002 2016-11-17
+ [Michael Daum]
+ - using Moo instead of Any::Moose
+ - performance improvement when using a lot of providers
+ - accept json as well as text/plain and javascript now
+ - improvements to the renderer
+ - fixed tests
 
-0.03  Thu Feb 19 21:39:18 PST 2009
-        - use Any::Moose
+0.04 2009-07-02T15:52:19Z
+ - Kill the last instance of Squirrel
 
-0.02  Fri Dec  5 02:36:44 JST 2008
-        - use Squirrel
+0.03 2009-02-19T21:39:18Z
+ - use Any::Moose
 
-0.01  Wed Aug 13 11:47:22 2008
-        - original version
+0.02 2008-12-05T02:36:44Z
+ - use Squirrel
+
+0.01 2008-08-13T11:47:22Z
+ - original version

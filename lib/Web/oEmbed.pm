@@ -1,14 +1,17 @@
 package Web::oEmbed;
 
 use strict;
-use 5.8.1;
-our $VERSION = '0.04';
+use warnings;
+our $VERSION = '0.04_002';
 
-use Any::Moose;
+use Moo;
+use Types::Standard qw(InstanceOf HashRef);
+
+use Regexp::Assemble ();
 has 'format'    => (is => 'rw', default => 'json');
 has 'discovery' => (is => 'rw');
-has 'providers' => (is => 'rw', isa => 'ArrayRef', default => sub { [] });
-has 'agent'     => (is => 'rw', isa => 'LWP::UserAgent', default => sub {
+has 'providers' => (is => 'rw', isa => HashRef, default => sub { {} });
+has 'agent'     => (is => 'rw', isa => InstanceOf['LWP::UserAgent'], default => sub {
                         require LWP::UserAgent;
                         LWP::UserAgent->new( agent => __PACKAGE__ . "/" . $VERSION );
                     });
@@ -18,15 +21,20 @@ use Web::oEmbed::Response;
 
 sub register_provider {
     my($self, $provider) = @_;
-    $provider->{regexp} = $self->_compile_url($provider->{url});
-    push @{$self->providers}, $provider;
+
+    $provider->{regexp} ||= $self->_compile_url($provider->{url});
+
+    $self->{ra} = Regexp::Assemble->new(track=>1) unless defined $self->{ra};
+    $self->{ra}->add($provider->{regexp});
+
+    $self->{providers}{$provider->{regexp}} = $provider;
 }
 
 sub _compile_url {
     my($self, $url) = @_;
     my $res;
     my $uri = URI->new($url);
-    $res  = $uri->scheme . "://";
+    $res  = $uri->scheme . ':\/\/';
     $res .=  _run_regexp($uri->host, '[0-9a-zA-Z\-]+');
     $res .=  _run_regexp($uri->path, "[$URI::uric]+" );
     $res;
@@ -40,35 +48,45 @@ sub _run_regexp {
 
 sub provider_for {
     my($self, $uri) = @_;
-    for my $provider (@{$self->providers}) {
-        if ($uri =~ m!^$provider->{regexp}!) {
-            return $provider;
-        }
+
+    my $match = $self->{ra}->match($uri);
+
+    unless ($match) {
+      #print STDERR "no match for $uri\n";
+      return;
     }
+
+    my $provider = $self->{providers}{$match};
+    return $provider if $provider;
+  
+    #print STDERR "woops, provider not for $uri: '$match'\n";
+    #print STDERR "known keys are:\n".join("\n", keys %{$self->{providers}})."\n";
+
     return;
 }
 
 sub request_url {
     my($self, $uri, $opt) = @_;
 
-    my $params = {
-        url    => $uri,
-        format => $opt->{format} || $self->format,
-    };
-
-    $params->{maxwidth}  = $opt->{maxwidth}  if exists $opt->{maxwidth};
-    $params->{maxheight} = $opt->{maxheight} if exists $opt->{maxheight};
-
     my $provider = $self->provider_for($uri) or return;
+
+    my %params = %{$provider->{params} || {}};
+    $params{url} = $uri;
+    $params{format} = $opt->{format} || $self->format;
+
+    $params{maxwidth}  = $opt->{maxwidth}  if exists $opt->{maxwidth};
+    $params{maxheight} = $opt->{maxheight} if exists $opt->{maxheight};
+
     my $req_uri  = URI->new( $provider->{api} );
     if ($req_uri->path =~ /%7Bformat%7D/) { # yuck
         my $path = $req_uri->path;
-        $path =~ s/%7Bformat%7D/$params->{format}/;
+        $path =~ s/%7Bformat%7D/$params{format}/;
         $req_uri->path($path);
-        delete $params->{format};
+        delete $params{format};
     }
 
-    $req_uri->query_form($params);
+
+    $req_uri->query_form(\%params);
     $req_uri;
 }
 
@@ -231,16 +249,6 @@ method is an alias to C<html> accessor if there is one in the response
 or C<rich> response.
 
 =back
-
-=head1 TODO
-
-Currently if you register 100 providers, the I<embed> method could
-potentially iterate through all of providers to run the regular
-expression, which doesn't sound good. I guess we could come up with
-some Trie-ish regexp solution that immediately returns the
-correspondent provider by compiling all regular expressions into one.
-
-Patches are welcome on this :)
 
 =head1 COPYRIGHT
 

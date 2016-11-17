@@ -32,14 +32,8 @@ sub canon {
 __END__
 ===
 --- input: http://www.flickr.com/photos/bees/2362225867/
---- html: <img src="http://farm4.static.flickr.com/3040/2362225867_4a87ab8baf.jpg" width="500" height="375" alt="Bacon Lollys" />
+--- html: <a href="https://www.flickr.com/photos/bees/2362225867/" title="Bacon Lollys"><img alt="Bacon Lollys" height="768" src="https://farm4.staticflickr.com/3040/2362225867_4a87ab8baf_b.jpg" width="1024" /></a>
 
 ===
---- input: http://www.vimeo.com/757219
---- html
-<object type="application/x-shockwave-flash" width="504" height="380" data="http://vimeo.com/moogaloop.swf?clip_id=757219&amp;server=vimeo.com&amp;fullscreen=1&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF">
-        <param name="quality" value="best" />
-        <param name="allowfullscreen" value="true" />
-        <param name="scale" value="showAll" />
-        <param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=757219&amp;server=vimeo.com&amp;fullscreen=1&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF" />
-</object>
+--- input: http://vimeo.com/191827734
+--- html: <iframe allowfullscreen="allowfullscreen" frameborder="0" height="376" mozallowfullscreen="mozallowfullscreen" src="https://player.vimeo.com/video/191827734" title="The First Men" webkitallowfullscreen="webkitallowfullscreen" width="960"></iframe>
