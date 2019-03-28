@@ -2,7 +2,8 @@ use inc::Module::Install;
 name 'Web-oEmbed';
 all_from 'lib/Web/oEmbed.pm';
 
-requires 'Any::Moose';
+requires 'Moo';
+requires 'Type::Tiny';
 requires 'LWP';
 requires 'XML::LibXML::Simple';
 requires 'JSON::XS';

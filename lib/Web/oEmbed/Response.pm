@@ -1,9 +1,12 @@
 package Web::oEmbed::Response;
 use strict;
 use Carp;
-use Any::Moose;
+use Moo;
+use Type::Utils qw(class_type);
 
-has 'http_response', is => 'ro', isa => 'HTTP::Response';
+my $HTTPResponse = class_type({ class => "HTTP::Response" });
+
+has 'http_response', is => 'ro', isa => $HTTPResponse, coerce => 1;
 
 has 'matched_uri', is => 'ro';
 has 'type', is => 'rw';

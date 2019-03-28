@@ -4,11 +4,16 @@ use strict;
 use 5.8.1;
 our $VERSION = '0.04';
 
-use Any::Moose;
+use Moo;
+use Types::Standard qw(ArrayRef);
+use Type::Utils qw(class_type);
+
+my $LWPUserAgent = class_type({ class => "LWP::UserAgent" });
+
 has 'format'    => (is => 'rw', default => 'json');
 has 'discovery' => (is => 'rw');
-has 'providers' => (is => 'rw', isa => 'ArrayRef', default => sub { [] });
-has 'agent'     => (is => 'rw', isa => 'LWP::UserAgent', default => sub {
+has 'providers' => (is => 'rw', isa => ArrayRef, default => sub { [] }, coerce => 1);
+has 'agent'     => (is => 'rw', isa => $LWPUserAgent, default => sub {
                         require LWP::UserAgent;
                         LWP::UserAgent->new( agent => __PACKAGE__ . "/" . $VERSION );
                     });
